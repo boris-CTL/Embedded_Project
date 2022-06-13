@@ -240,7 +240,7 @@ class MyGesture:
     def start(self, isJetson=False):
         # self.dataGUI.getData()
         if isJetson:
-            self.cap = cv2.VideoCapture(cap = cv2.VideoCapture('nvarguscamerasrc ! nvvidconv ! video/x-raw, format=BGRx ! videoconvert ! video/x-raw, format=BGR ! appsink', cv2.CAP_GSTREAMER))
+            self.cap = cv2.VideoCapture('nvarguscamerasrc ! nvvidconv ! video/x-raw, format=BGRx ! videoconvert ! video/x-raw, format=BGR ! appsink', cv2.CAP_GSTREAMER)
         else:
             self.cap = cv2.VideoCapture(0)
         while True:
