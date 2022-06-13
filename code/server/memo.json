@@ -13,6 +13,11 @@
         "right": "Right Gesture",
         "dest": "ID of destination"
     },
+    "RPI_BLE": {
+        "type": "RPI_BLE",
+        "device": "Device Name",
+        "dest": "ID of destination"
+    },
     "STM_SENSOR": {
         "type": "STM_SENSOR",
         "T": "Temperature",

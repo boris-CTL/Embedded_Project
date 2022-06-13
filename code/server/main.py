@@ -65,27 +65,16 @@ if __name__ == '__main__':
                                 else:
                                     conn.send(bytes(json.dumps(errorData), "utf-8"))
                                 collection.insert_one(data)
-                                
                             elif data["type"]=="STM_BLE":
                                 if data["dest"] in addrDict:
                                     addrDict[data["dest"]].send(bytes(json.dumps(data), "utf-8"))
                                 else:
                                     conn.send(bytes(json.dumps(errorData), "utf-8"))
-                            # elif data["type"]=="RPI_GUI":
-                            #     # DBdata = collection.find().sort("_id", 1).limit(50)
-                            #     rawData = collection.find().sort("_id", 1).limit(5)
-                            #     Data = []
-                            #     for item in rawData:
-                            #         Data.append(str(item))
-                            #     GUIData = {
-                            #         "type": "GUI_DATA",
-                            #         "data": str(Data)
-                            #     }
-                            #     # print(GUIData)
-                            #     conn.send(bytes(json.dumps(GUIData), "utf-8"))
-                    # else:
-                    #     print(data)
-                    #     conn.send(bytes("BLE Info successed!", "utf-8"))
+                            elif data["type"]=="RPI_BLE":
+                                if data["dest"] in addrDict:
+                                    addrDict[data["dest"]].send(bytes(("Bluetooth:"+data["device"]+"\n"), "utf-8"))
+                                else:
+                                    conn.send(bytes(json.dumps(errorData), "utf-8"))
                 except KeyboardInterrupt:
                     # quit
                     conn.close()

@@ -202,41 +202,6 @@ class MyGesture:
             else:
                 self.getRightGesture = "None"
 
-        # if indexOpen:
-        #     direction = checkDirection(landmark[8], landmark[7], landmark[6], landmark[5])
-        # else:
-        #     direction = "Unknown"
-
-        # if indexOpen and not(middleOpen) and not(ringOpen) and not(pinkyOpen):
-        #     if direction == "Left":
-        #         gesture = "Left"
-        #     elif direction == "Right":
-        #         gesture = "Right"
-        #     elif direction == "Up":
-        #         gesture = "Up"
-        #     elif direction == "Down":
-        #         gesture = "Down"
-        #     else:
-        #         gesture = "None"
-        # elif indexOpen and middleOpen and ringOpen and pinkyOpen:
-        #     palmDirection = checkPalmDirection(landmark[0], landmark[5], landmark[17], type)
-        #     if direction == "Left" or direction == "Right":
-        #         if palmDirection == "Up":
-        #             gesture = "SpeedUp"
-        #         elif palmDirection == "Down":
-        #             gesture = "SlowDown"
-        #         else:
-        #             gesture = "None"
-        #     elif direction == "Up":
-        #         if palmDirection == "Front":
-        #             gesture = "Stop"
-        #         else:
-        #             gesture = "None"
-        #     else:
-        #         gesture = "None"
-        # else:
-        #     gesture = "None"
-
     def start(self, isJetson=False):
         # self.dataGUI.getData()
         if isJetson:
@@ -302,14 +267,41 @@ class MyGesture:
                         self.reset = False
                 else:
                     self.reset = True
-            if cv2.waitKey(1) == ord('q'):
+            keyData = {
+                "type": "RPI_GES",
+                "left": "None",
+                "right": "None",
+                "dest": self.dest
+            }
+            key = cv2.waitKey(1)
+            if key == ord('q'):
                 cv2.destroyWindow(self.name)
                 self.cap.release()
                 break
-            # elif cv2.waitKey(1) == ord('s'):
-            #     self.dataGUI.__start__()
-            # elif cv2.waitKey(1) == ord('t'):
-            #     self.dataGUI.__stop__()
+            elif key == ord('g'):
+                keyData["left"] = "Go"
+                self.s.send(bytes(json.dumps(keyData),"utf-8"))
+            elif key == ord('s'):
+                keyData["left"] = "Stop"
+                self.s.send(bytes(json.dumps(keyData),"utf-8"))
+            elif key == ord('f'):
+                keyData["left"] = "Front"
+                self.s.send(bytes(json.dumps(keyData),"utf-8"))
+            elif key == ord('b'):
+                keyData["left"] = "Back"
+                self.s.send(bytes(json.dumps(keyData),"utf-8"))
+            elif key == ord('l'):
+                keyData["left"] = "Left"
+                self.s.send(bytes(json.dumps(keyData),"utf-8"))
+            elif key == ord('r'):
+                keyData["left"] = "Right"
+                self.s.send(bytes(json.dumps(keyData),"utf-8"))
+            elif key == ord('u'):
+                keyData["left"] = "SpeedUp"
+                self.s.send(bytes(json.dumps(keyData),"utf-8"))
+            elif key == ord('d'):
+                keyData["left"] = "SlowDown"
+                self.s.send(bytes(json.dumps(keyData),"utf-8"))
                 
 
 if __name__ == "__main__":
