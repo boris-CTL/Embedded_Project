@@ -1,0 +1,35 @@
+{
+    "RPI_SETUP": {
+        "type": "RPI_SETUP",
+        "ID": "RPI's ID"
+    },
+    "STM_SETUP": {
+        "type": "STM_SETUP",
+        "ID": "STM's ID"
+    },
+    "RPI_GES": {
+        "type": "RPI_GES",
+        "left": "Left Gesture",
+        "right": "Right Gesture",
+        "dest": "ID of destination"
+    },
+    "STM_SENSOR": {
+        "type": "STM_SENSOR",
+        "T": "Temperature",
+        "H": "Humidity",
+        "P": "Pressure",
+        "Mag": {"Mag_X": "X", "Mag_Y": "Y", "Mag_Z": "Z"},
+        "Gyr": {"Gyr_X": "X", "Gyr_Y": "Y", "Gyr_Z": "Z"},
+        "Acc": {"Acc_X": "X", "Acc_Y": "Y", "Acc_Z": "Z"},
+        "dest": "ID of destination"
+    },
+    "STM_BLE": {
+        "type": "STM_BLE",
+        "HandleID": "ID of Changing Handle",
+        "Value": "New Value ex: 0xFFEE",
+        "dest": "ID of destination"
+    },
+    "RPI_GUI": {
+        "type": "RPI_GUI"
+    }
+}
