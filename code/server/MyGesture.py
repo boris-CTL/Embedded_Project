@@ -241,6 +241,8 @@ class MyGesture:
         # self.dataGUI.getData()
         if isJetson:
             self.cap = cv2.VideoCapture('nvarguscamerasrc ! nvvidconv ! video/x-raw, format=BGRx ! videoconvert ! video/x-raw, format=BGR ! appsink', cv2.CAP_GSTREAMER)
+            self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 960)
+            self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 540)
         else:
             self.cap = cv2.VideoCapture(0)
         while True:
