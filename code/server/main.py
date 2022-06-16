@@ -35,9 +35,9 @@ if __name__ == '__main__':
         def socketProcessing(conn, addr, collection, s):
             while True:
                 try:
-                    data = conn.recv(256).decode('utf-8')
+                    data = conn.recv(546).decode('utf-8')
                     if data[0:8]=='{"type":':
-                        print(data)
+                        # print(data)
                         data = parse_data(data)
                         if data["type"]=="RPI_SETUP":
                             addrDict.update({data["ID"]: conn})
@@ -48,33 +48,61 @@ if __name__ == '__main__':
                                 "type": "ERROR",
                                 "msg": "Client Not Found!"
                             }
-                            if data["type"]=="RPI_GES":
-                                if data["dest"] in addrDict:
-                                    if not(data["left"] == "None"):
-                                        addrDict[data["dest"]].send(bytes(data["left"], "utf-8"))
+                            try:
+                                if data["type"]=="RPI_GES":
+                                    if data["dest"] in addrDict:
+                                        if not(data["left"] == "None"):
+                                            addrDict[data["dest"]].send(bytes(data["left"], "utf-8"))
+                                        else:
+                                            addrDict[data["dest"]].send(bytes(data["right"], "utf-8"))
+                                        # addrDict[data["dest"]].send(bytes(json.dumps(data), "utf-8"))
                                     else:
-                                        addrDict[data["dest"]].send(bytes(data["right"], "utf-8"))
-                                    # addrDict[data["dest"]].send(bytes(json.dumps(data), "utf-8"))
-                                else:
-                                    conn.send(bytes(json.dumps(errorData), "utf-8"))
-                            elif data["type"]=="STM_SENSOR":
-                                print("Sensor Data In!")
-                                data["time"] = time.time()
-                                if data["dest"] in addrDict:
-                                    addrDict[data["dest"]].send(bytes(json.dumps(data), "utf-8"))
-                                else:
-                                    conn.send(bytes(json.dumps(errorData), "utf-8"))
-                                collection.insert_one(data)
-                            elif data["type"]=="STM_BLE":
-                                if data["dest"] in addrDict:
-                                    addrDict[data["dest"]].send(bytes(json.dumps(data), "utf-8"))
-                                else:
-                                    conn.send(bytes(json.dumps(errorData), "utf-8"))
-                            elif data["type"]=="RPI_BLE":
-                                if data["dest"] in addrDict:
-                                    addrDict[data["dest"]].send(bytes(("Bluetooth:"+data["device"]+"\n"), "utf-8"))
-                                else:
-                                    conn.send(bytes(json.dumps(errorData), "utf-8"))
+                                        conn.send(bytes(json.dumps(errorData), "utf-8"))
+                                elif data["type"]=="STM_SENSOR":
+                                    data["time"] = time.time()
+                                    if data["dest"] in addrDict:
+                                        addrDict[data["dest"]].send(bytes(json.dumps(data), "utf-8"))
+                                    else:
+                                        conn.send(bytes(json.dumps(errorData), "utf-8"))
+                                    collection.insert_one(data)
+                                elif data["type"]=="STM_BLE":
+                                    if data["dest"] in addrDict:
+                                        addrDict[data["dest"]].send(bytes(json.dumps(data), "utf-8"))
+                                    else:
+                                        conn.send(bytes(json.dumps(errorData), "utf-8"))
+                                elif data["type"]=="STM_RADAR":
+                                    if data["dest"] in addrDict:
+                                        addrDict[data["dest"]].send(bytes(json.dumps(data), "utf-8"))
+                                    else:
+                                        conn.send(bytes(json.dumps(errorData), "utf-8"))
+                                elif data["type"]=="STM_HEADER" or data["type"]=="STM_AUDIO" or data["type"]=="STM_END":
+                                    if data["dest"] in addrDict:
+                                        addrDict[data["dest"]].send(bytes(json.dumps(data), "utf-8"))
+                                    else:
+                                        conn.send(bytes(json.dumps(errorData), "utf-8"))
+                                elif data["type"]=="RPI_BLE":
+                                    if data["dest"] in addrDict:
+                                        addrDict[data["dest"]].send(bytes(("Bluetooth:"+data["device"]+"\n"), "utf-8"))
+                                    else:
+                                        conn.send(bytes(json.dumps(errorData), "utf-8"))
+                                elif data["type"]=="RPI_RADAR":
+                                    if data["dest"] in addrDict:
+                                        if data["Start"]=="T":
+                                            addrDict[data["dest"]].send(bytes(("RadarStart"), "utf-8"))
+                                        else:
+                                            addrDict[data["dest"]].send(bytes(("RadarHalt"), "utf-8"))
+                                    else:
+                                        conn.send(bytes(json.dumps(errorData), "utf-8"))
+                                elif data["type"]=="RPI_AUDIO":
+                                    if data["dest"] in addrDict:
+                                        if data["Start"]=="T":
+                                            addrDict[data["dest"]].send(bytes(("AudioStart"), "utf-8"))
+                                        else:
+                                            addrDict[data["dest"]].send(bytes(("AudioHalt"), "utf-8"))
+                                    else:
+                                        conn.send(bytes(json.dumps(errorData), "utf-8"))
+                            except Exception as e:
+                                print(e)
                 except KeyboardInterrupt:
                     # quit
                     conn.close()
@@ -83,7 +111,7 @@ if __name__ == '__main__':
                     # continue
                     # # print("Error!")
                     print(e)
-                    break
+                    # break
         
         while True:
             Client, address = s.accept()

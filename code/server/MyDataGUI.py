@@ -3,6 +3,7 @@ import os
 from dotenv import load_dotenv
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
+from matplotlib.widgets import Button
 from collections import deque
 import time
 
@@ -47,8 +48,8 @@ class MyDataGUI:
         self.mapping_of_colors[(1,1)] = 'y'
         self.mapping_of_colors[(1,2)] = 'k'
 
-        self.fig, self.axs = plt.subplots(2, 3)
-        plt.tight_layout()
+        # self.fig, self.axs = plt.subplots(2, 3)
+        # plt.tight_layout()
 
     def setData(self, latestData):
         self.num = 0
@@ -83,10 +84,17 @@ class MyDataGUI:
                 self.axs[index,j].set_xticks([])
                 self.axs[index,j].set_title(self.mapping_of_title[(index,j)])
                 self.axs[index,j].grid(True, linewidth=0.5, linestyle=':')
+        
         for index in range(0,2):
             for j in range(0,3):
                 self.axs[index,j].plot(self.time, self.mapping_of_those_list_of_values[(index,j)], self.mapping_of_colors[(index,j)])
-        plt.pause(0.1)
+        # plt.pause(0.1)
+        # try:
+        #     plt.pause(0.1)
+        #     # self.fig.pause(0.1)
+        # except:
+        #     # print("Exception Close")
+        #     pass
 
     def updateData(self, data):
         if self.num >= 50:
@@ -107,12 +115,23 @@ class MyDataGUI:
         self.gyr_Z.append(data["Gyr"]["Z"])
         self.time.append(data["time"])
 
+    def __close_event__(self, event):
+        try:
+            plt.close(self.fig)
+        except:
+            pass
+
     def start(self):
         # start_new_thread(self.control, ())
+        self.fig, self.axs = plt.subplots(2, 3)
+        self.fig.canvas.mpl_connect('close_event', self.__close_event__)
+        # self.close_ax = self.fig.add_axes([0.025,0.025,0.125,0.05])
+        # self.close_but = Button(self.close_ax,'Close Plot',color='#FCFCFC',hovercolor='w')
+        # self.close_but.on_clicked(self.__close_event__)
+        plt.tight_layout()
+        # self.fig.tight_layout()
         ani = animation.FuncAnimation(self.fig, self.__plot__, interval=100)
         plt.show()
-        # ani.event_source.stop()
-        del ani
 
 if __name__ == '__main__':
     load_dotenv()

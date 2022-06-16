@@ -34,7 +34,37 @@
         "Value": "New Value ex: 0xFFEE",
         "dest": "ID of destination"
     },
+    "STM_RADAR": {
+        "type": "STM_RADAR",
+        "Angle": "Current Angle",
+        "Dist": "Radar Distance",
+        "dest": "ID of destination"
+    },
+    "STM_HEADER": {
+        "type": "STM_HEADER",
+        "data": "Data of WAV Header",
+        "dest": "ID of destination"
+    },
+    "STM_AUDIO": {
+        "type": "STM_AUDIO",
+        "data": "Data of WAV Content",
+        "dest": "ID of destination"
+    },
+    "STM_END": {
+        "type": "STM_END",
+        "dest": "ID of destination"
+    },
     "RPI_GUI": {
         "type": "RPI_GUI"
+    },
+    "RPI_RADAR": {
+        "type": "RPI_RADAR",
+        "Start": "T: start, F: stop",
+        "dest": "ID of destination"
+    },
+    "RPI_AUDIO": {
+        "type": "RPI_AUDIO",
+        "Start": "T: start, F: stop",
+        "dest": "ID of destination"
     }
 }
