@@ -4,6 +4,8 @@ ESLab Final Project
 # 摘要
 本文會大略介紹本次期末專題的動機、作法、成果、How to Implement與參考資料。
 
+![Our Car](./img/OurCar.png)
+
 # 動機
 由於受到5G物聯網時代、火星探索車與各種多功能的智慧家電影響，本次期末專題選擇透過mbed os的各種功能搭配B-L475E-IOT01A搭載搭載的多樣Sensor與無線通訊模組來實現一台多功能的智慧車。
 
@@ -36,23 +38,28 @@ ESLab Final Project
 
 ## 1.資料圖像化
 [Demo](https://youtu.be/Mk69kflESu8)
+
 ![Data GUI Image](./img/DataGUI.jpg)
 
 ## 2.簡易雷達
 [Demo](https://youtu.be/RHm4_1YgY9E)
+
 ![Radar Image](./img/Radar.jpg)
 
 ## 3.音訊傳遞
 [Demo](https://youtu.be/UVQB6Vfc58c)
-![Audio Image](./img/Audio.png)
+
+<img src="./img/Audio.png" alt="Audio Image" style="width:200px;"/>
 
 ## 4.手勢辨識遙控
 [Demo](https://youtu.be/I0MvmhiXyvU)
+
 ![Gesture Control Image](./img/GestureControl.jpg)
 
 ## 5.遙控BLE
 [Demo](https://youtu.be/5mQlsj9Lum0)
-![BLE Image](./img/BLE.png)
+
+<img src="./img/BLE.png" alt="BLE Image" style="width:200px;"/>
 
 # How to Implement
 
