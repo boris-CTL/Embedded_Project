@@ -24,15 +24,50 @@ static size_t half_transfer_events = 0;
 static size_t transfer_complete_events = 0;
 
 //create a 3-order butterworth lowpass filter, 3db freq = 500hz
-static double b_0 = 0.0008;
-static double b_1 = 0.0024;
-static double b_2 = 0.0024;
-static double b_3 = 0.0008;
+// static double b_0 = 0.0008;
+// static double b_1 = 0.0024;
+// static double b_2 = 0.0024;
+// static double b_3 = 0.0008;
+
+// static double a_0 = 1;
+// static double a_1 = -2.6079;
+// static double a_2 = 2.2890;
+// static double a_3 = -0.6748;
+
+
+//create a 3-order butterworth lowpass filter, 3db freq = 400hz
+// static double b_0 = 0.0004;
+// static double b_1 = 0.0012;
+// static double b_2 = 0.0012;
+// static double b_3 = 0.0004;
+
+// static double a_0 = 1;
+// static double a_1 = -2.6862;
+// static double a_2 = 2.4197;
+// static double a_3 = -0.7302;
+
+
+//create a 3-order chebyshev type-1 lowpass filter, 3db freq = 516hz
+static double b_0 = 0.2884*0.001;
+static double b_1 = 0.8652*0.001;
+static double b_2 = 0.8652*0.001;
+static double b_3 = 0.2884*0.001;
 
 static double a_0 = 1;
-static double a_1 = -2.6079;
-static double a_2 = 2.2890;
-static double a_3 = -0.6748;
+static double a_1 = -2.8274;
+static double a_2 = 2.6949;
+static double a_3 = -0.8652;
+
+//create a 3-order elliptic lowpass filter, 3db freq = 516hz
+// static double b_0 = 0.3436*0.001;
+// static double b_1 = 0.8111*0.001;
+// static double b_2 = 0.8111*0.001;
+// static double b_3 = 0.3436*0.001;
+
+// static double a_0 = 1;
+// static double a_1 = -2.8274;
+// static double a_2 = 2.6950;
+// static double a_3 = -0.8652;
 
 
 //create a 3-order butterworth lowpass filter, 3db freq = 500hz
