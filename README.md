@@ -1,62 +1,64 @@
-ESLab Final Project
+Digital Signal Processing and Bluetooth Programming for Embedded Devices
 ===
 
-# 摘要
-本文會大略介紹本次期末專題的動機、作法、成果、How to Implement與參考資料。
+# Summary
+This README provides an overview of the motivation, methodology, results, implementation steps, and references for this embedded project.
 
 ![Our Car](./img/OurCar.png)
 
-# 動機
-由於受到5G物聯網時代、火星探索車與各種多功能的智慧家電影響，本次期末專題選擇透過mbed os的各種功能搭配B-L475E-IOT01A搭載搭載的多樣Sensor與無線通訊模組來實現一台多功能的智慧車。
+# Motivation
+Inspired by the era of 5G IoT, Mars rovers, and various multifunctional smart home appliances, this project aims to implement a multifunctional smart car using Mbed OS, combined with the multiple sensors and wireless communication modules available on the B-L475E-IOT01A board.
 
-本次專題中大量使用的Thread、Condition Variable、Mutex、EventQueue與IRQ等功能來提升開發時的效率，並有效整合不同功能，也加入了關於DSP等進階的技巧。
+In this project, we extensively utilize features such as Threads, Condition Variables, Mutexes, EventQueues, and IRQs to enhance development efficiency and effectively integrate various functionalities. Additionally, we incorporate advanced techniques related to Digital Signal Processing (DSP).
 
-# 作法
+# Methodology
 
 ## Mbed
 
-透過為不同功能、模組設定對應的class與其函式，有效地將不同功能同步、非同步地整合在同一台車上。
+By defining specific classes and functions for different modules, we effectively integrate synchronous and asynchronous functionalities into a single vehicle.
 
-在控制板端，本次專案透過Thread將不同功能分開，並透過Condition Variable來控制不同Thread透過socket傳送資料，在`receive_http_request`中控制不同Thread在接收到指令時的反應。
+On the control board side, this project uses `Threads` to separate different functionalities and employs `Condition Variables` to control data transmission via sockets between different `Threads`. The `receive_http_request` function handles the response of different `Threads` upon receiving commands.
 
-而BLE與錄音的功能均透過不同的callback函式來執行對應的功能，其中，由於控制板的記憶體有限，錄音時最多一次只能錄0.25秒的音訊（預設Sample Rate為16000）。
+The BLE and audio recording functionalities are implemented using separate callback functions. 
 
-而不同的模組也透過專屬的`class`來進行Implementation，以實現將專案物件化提升開發與維護效率的功能。
+Each module is encapsulated within its respective `class` to enhance the efficiency of development and maintenance through object-oriented design.
 
 ## Server & Client
 
-透過Mediapipe與OpenCV實現手勢辨識功能，其中，Jetson Nano端的VideoCapture需要進行對應設定以充分應用GPU的效能。
+Hand gesture recognition is implemented using [Mediapipe](https://github.com/google-ai-edge/mediapipe) and [OpenCV](https://github.com/opencv/opencv). The VideoCapture function on the Jetson Nano requires appropriate configuration to fully leverage GPU performance.
 
-透過Pymongo與Matplotlib分別存取各項資料、將資料圖像化轉換出來，並透過對應的物件分別執行。
+[Pymongo](https://github.com/mongodb/mongo-python-driver) and [Matplotlib](https://github.com/matplotlib/matplotlib) are used for data storage and visualization. Each component executes corresponding tasks via dedicated objects.
 
-## 整合
 
-透過建立Socket連線，由Server連接控制板與Client以設定不同功能、傳送不同的資料，可以在`memo.json`中查看不同物件對應的資料。
 
-# 成果
-本次專案實現了5個子功能，但由於Module與控制板Hardware的限制無法同時使用，實現功能分別為：
+## Integration
 
-## 1.資料圖像化
+By establishing socket connections, the server connects the control board and client to configure different functionalities and transmit data. The `memo.json` file contains mappings for various objects and their corresponding data.
+
+# Results
+This project successfully implements five sub-functions. The implemented features include:
+
+## 1.Data Visualization
 [Demo](https://youtu.be/Mk69kflESu8)
 
 ![Data GUI Image](./img/DataGUI.jpg)
 
-## 2.簡易雷達
+## 2.Simple Radar
 [Demo](https://youtu.be/RHm4_1YgY9E)
 
 ![Radar Image](./img/Radar.jpg)
 
-## 3.音訊傳遞
+## 3.Audio Transmission
 [Demo](https://youtu.be/UVQB6Vfc58c)
 
 <img src="./img/Audio.png" alt="Audio Image" style="width:200px;"/>
 
-## 4.手勢辨識遙控
+## 4. Gesture-Controlled Remote
 [Demo](https://youtu.be/I0MvmhiXyvU)
 
 ![Gesture Control Image](./img/GestureControl.jpg)
 
-## 5.遙控BLE
+## 5.BLE Remote Control
 [Demo](https://youtu.be/5mQlsj9Lum0)
 
 <img src="./img/BLE.png" alt="BLE Image" style="width:200px;"/>
@@ -100,15 +102,15 @@ SERVER_PORT=YOUR_SERVER_PORT
 4. Run `MyRPIClient.py`
 But for RPI3B+, FPS is only about 1.
 
-# 參考資料
+# References
 
-## Jetson Nano設定：
+## Jetson Nano Setup:
 https://automaticaddison.com/how-to-set-up-the-nvidia-jetson-nano-developer-kit/
 
-## RaspberryPi手勢辨識：
+## Raspberry Pi Gesture Recognition:
 https://github.com/Kazuhito00/mediapipe-python-sample/blob/main/sample_hand.py
 https://zenn.dev/karaage0703/articles/63fed2a261096d
 https://github.com/PINTO0309/mediapipe-bin
 
-## .wav相關設定：
+## WAV File Configuration:
 https://onestepcode.com/read-wav-header/
